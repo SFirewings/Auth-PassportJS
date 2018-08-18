@@ -57,9 +57,9 @@ passport.use(
   //  passport callback function
   //  console.log('passport callback function fired');
   //  console.log('|||| USER DATA BEGIN ||||');
-      console.log(profile);
+  //    console.log(profile);
   //  console.log('|||| USER DATA END ||||');
-      User.findOne({idvk:profile.id}).then((currentUser) => {
+      User.findOne({identificator:profile.id}).then((currentUser) => {
         if(currentUser){
           // allready have the user
           console.log('|||| user is logged in: ', currentUser, ' ||||');
