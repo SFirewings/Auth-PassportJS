@@ -1,5 +1,6 @@
 const passport = require('passport');
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 const keys = require('./keys');
 const User = require('../models/user-model');
 
@@ -25,7 +26,7 @@ passport.use(
   //  console.log('|||| USER DATA BEGIN ||||');
   //  console.log(profile);
   //  console.log('|||| USER DATA END ||||');
-      User.findOne({idvk:profile.id}).then((currentUser) => {
+      User.findOne({identificator:profile.id}).then((currentUser) => {
         if(currentUser){
           // allready have the user
           console.log('|||| user is logged in: ', currentUser, ' ||||');
@@ -34,11 +35,45 @@ passport.use(
           //if not, create user in db
           new User({
           username:profile.displayName,
-          idvk: profile.id,
-          thumbnail: profile._json.photo
+          identificator: profile.id,
+          thumbnail: profile._json.photo,
+          provider: 'VK'
         }).save().then((newUser) => {
           console.log('|||| new user created: '+ newUser, ' ||||');
           done(null, newUser);
+        });
+        }
+      })
+  })
+);
+
+passport.use(
+  new GitHubStrategy({
+    // options for the vk strategy
+    callbackURL:'/auth/github/redirect',
+    clientID:keys.github.clientID,
+    clientSecret:keys.github.clientSecret
+  }, (accessToken, refreshToken, profile, cb) => {
+  //  passport callback function
+  //  console.log('passport callback function fired');
+  //  console.log('|||| USER DATA BEGIN ||||');
+      console.log(profile);
+  //  console.log('|||| USER DATA END ||||');
+      User.findOne({idvk:profile.id}).then((currentUser) => {
+        if(currentUser){
+          // allready have the user
+          console.log('|||| user is logged in: ', currentUser, ' ||||');
+          cb(null, currentUser);
+        } else {
+          //if not, create user in db
+          new User({
+          username:profile.displayName,
+          identificator: profile.id,
+          thumbnail: profile._json.avatar_url,
+          provider:'Github'
+        }).save().then((newUser) => {
+          console.log('|||| new user created: '+ newUser, ' ||||');
+          cb(null, newUser);
         });
         }
       })
