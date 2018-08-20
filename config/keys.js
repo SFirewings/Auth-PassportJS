@@ -5,6 +5,10 @@ module.exports = {
     clientID:'',
     clientSecret:''
   },
+    github: {
+    clientID:'',
+    clientSecret:''
+  },
   mongodb: {
     dbURL:''
   },
