@@ -49,7 +49,7 @@ passport.use(
 
 passport.use(
   new GitHubStrategy({
-    // options for the vk strategy
+    // options for the github strategy
     callbackURL:'/auth/github/redirect',
     clientID:keys.github.clientID,
     clientSecret:keys.github.clientSecret
@@ -57,7 +57,7 @@ passport.use(
   //  passport callback function
   //  console.log('passport callback function fired');
   //  console.log('|||| USER DATA BEGIN ||||');
-  //    console.log(profile);
+  //  console.log(profile);
   //  console.log('|||| USER DATA END ||||');
       User.findOne({identificator:profile.id}).then((currentUser) => {
         if(currentUser){
