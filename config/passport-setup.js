@@ -1,6 +1,7 @@
 const passport = require('passport');
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
+// const TwitterStrategy = require('passport-twitter').Strategy; 
 const keys = require('./keys');
 const User = require('../models/user-model');
 
