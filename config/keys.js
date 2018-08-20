@@ -5,7 +5,11 @@ module.exports = {
     clientID:'',
     clientSecret:''
   },
-    github: {
+  github: {
+    clientID:'',
+    clientSecret:''
+  },
+  twitter: {
     clientID:'',
     clientSecret:''
   },
